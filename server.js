@@ -1,42 +1,26 @@
 const express = require('express');
+const { backPort } = require("./config");
+const passport = require("passport");
+const cors = require("cors");
+
 const app = express();
-const { db } = require("./config");
 app.use(express.json());
-const port = 5050;
+app.use(passport.initialize());
+app.use(cors());
+/* --------------------------------------------------------------------- Routes */
 
-app.get("/", (request, response) => {
-    console.log(request);
-    response.send("Welcome to Express");
-  });
+app.use("/auth", require("./routes/auth"));
+app.use("/", require("./routes/misc"));
 
-app.get("/travaux", (req, res) => {
-    db.query("SELECT * from travaux", (err, results) => {
-        if (err) {
-          res.status(500).send("Error retrieving data");
-        } else {
-          res.status(200).json(results);
-        }
-      });
-  });
+/* --------------------------------------------------------------------- 404 and server launch */
+app.use((req, res) => {
+  const msg = `Page not found: ${req.url}`;
+  console.warn(msg);
+  res.status(404).send(msg);
+});
 
-app.post("/travaux", (req, res) => {
-    const { nature, image1, image2, image3, image4 } = req.body;
-    db.query(
-        "INSERT INTO travaux(nature, image1, image2, image3, image4) VALUES(?, ?, ?, ?, ?)",
-        [nature, image1, image2, image3, image4], 
-        (err, results) => {
-              if (err) {
-                console.log(err);
-                res.status(500).send("Error saving travaux");
-              } else {
-                res.status(200).send("Successfully saved");
-              }
-            }
-        ); 
-  });
-
-app.listen(port, () => {
-    console.log(`Server is running on ${port}`);
+app.listen(backPort, () => {
+    console.log(`API root available at: http://localhost:${backPort}/`);
   });
 
 
