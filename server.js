@@ -1,16 +1,8 @@
 const express = require('express');
-const connection = require("./config");
 const app = express();
+const { db } = require("./config");
+app.use(express.json());
 const port = 5050;
-app.use(express.json())
-
-connection.connect(function(err) {
-    if (err) {
-      console.error('error connecting: ' + err.stack);
-      return;
-    }
-    console.log('connected as id ' + connection.threadId);
-  });
 
 app.get("/", (request, response) => {
     console.log(request);
@@ -18,7 +10,7 @@ app.get("/", (request, response) => {
   });
 
 app.get("/travaux", (req, res) => {
-    connection.query("SELECT * from travaux", (err, results) => {
+    db.query("SELECT * from travaux", (err, results) => {
         if (err) {
           res.status(500).send("Error retrieving data");
         } else {
@@ -29,7 +21,7 @@ app.get("/travaux", (req, res) => {
 
 app.post("/travaux", (req, res) => {
     const { nature, image1, image2, image3, image4 } = req.body;
-    connection.query(
+    db.query(
         "INSERT INTO travaux(nature, image1, image2, image3, image4) VALUES(?, ?, ?, ?, ?)",
         [nature, image1, image2, image3, image4], 
         (err, results) => {
