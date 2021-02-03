@@ -1,0 +1,25 @@
+{
+  "name": "2020-agribray-backend",
+  "version": "1.0.0",
+  "description": "URL : www.agribray.fr / www.agri-bray.com",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Guy-deMessimy/2020-agribray-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Guy-deMessimy/2020-agribray-backend/issues"
+  },
+  "homepage": "https://github.com/Guy-deMessimy/2020-agribray-backend#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5"
+  }
+}
