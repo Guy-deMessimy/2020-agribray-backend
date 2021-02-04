@@ -18,7 +18,7 @@ router.get("/testDB", async (req, res) => {
     }
   });
 
-  router.get("/protected", passport.authenticate("jwt"), (req, res) => {
+router.get("/protected", passport.authenticate("jwt"), (req, res) => {
     const msg =
       "If you can see this, you should be logged in, " + req.user.firstname;
     res.status(200).send(msg);
@@ -34,9 +34,15 @@ router.get("/travaux", async (req, res) => {
     res.status(500).send("Error retrieving data");
   }
 });
- 
 
+router.post("/contact", async (req, res) => {
+  try {
+    const newContact = req.body;
+    const [sqlRes] = await db.query(`INSERT INTO clients SET ?`, [newContact]);
+    res.status(200).json(sqlRes);
+  } catch (e) {
+    res.status(500).send("Erreur serveur");
+  }
+});
 
-
-
-  module.exports = router;
+module.exports = router;
