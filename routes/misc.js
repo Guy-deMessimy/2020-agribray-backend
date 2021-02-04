@@ -38,7 +38,7 @@ router.get("/travaux", async (req, res) => {
 router.post("/contact", async (req, res) => {
   try {
     const newContact = req.body;
-    const [sqlRes] = await db.query(`INSERT INTO clients SET ?`, [newContact]);
+    const [sqlRes] = await db.query(`INSERT INTO contacts SET ?`, [newContact]);
     res.status(200).json(sqlRes);
   } catch (e) {
     res.status(500).send("Erreur serveur");
