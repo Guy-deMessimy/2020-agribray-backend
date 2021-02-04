@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 
 router.get("/testDB", async (req, res) => {
     try {
-      const [sqlRes] = await db.execute(`SELECT * FROM clients`);
+      const [sqlRes] = await db.execute(`SELECT * FROM contacts`);
       res.status(200).json(sqlRes);
     } catch (e) {
       res.status(500).json(e);
