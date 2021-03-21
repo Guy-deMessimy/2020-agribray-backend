@@ -26,7 +26,7 @@ router.post("/signup", async (req, res) => {
     res.status(200).json({ user: req.user, token });
   });
   
-  router.post("/travaux", passport.authenticate("jwt"), async (req, res) => {
+  router.post("/travaux", async (req, res) => {
     try {
       const { nature, image1, image2, image3, image4 } = req.body;
       const [sqlRes] = await db.query(
